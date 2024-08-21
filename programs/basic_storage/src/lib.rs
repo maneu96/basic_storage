@@ -19,6 +19,11 @@ pub mod basic_storage {
         msg!("(x,y) = ({},{})", ctx.accounts.my_storage.x, ctx.accounts.my_storage.y);
         Ok(())
     }
+
+    pub fn print_coordinates(ctx: Context<PrintCoordinates>) -> Result<()> {
+        msg!("(x,y) = ({},{})", ctx.accounts.my_storage.x, ctx.accounts.my_storage.y);
+        Ok(())
+    }
 }
 
 #[derive(Accounts)]
@@ -37,12 +42,6 @@ pub struct Initialize<'info> {
                                                 // This will allow, in this case to transfer SOL away from the signer
 }
 
-#[derive(Accounts)]
-pub struct Set<'info> {
-    #[account(mut, seeds = [], bump)]
-    pub my_storage: Account<'info, MyStorage>,
-}
-
 
 #[account]
 pub struct MyStorage {
@@ -50,3 +49,14 @@ pub struct MyStorage {
     y: i64
 }
 
+
+#[derive(Accounts)]
+pub struct Set<'info> {
+    #[account(mut, seeds = [], bump)]
+    pub my_storage: Account<'info, MyStorage>,
+}
+
+#[derive(Accounts)]
+pub struct PrintCoordinates<'info> {
+    pub my_storage: Account<'info, MyStorage>,
+}

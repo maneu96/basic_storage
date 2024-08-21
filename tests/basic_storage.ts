@@ -29,4 +29,15 @@ describe("basic_storage", () => {
     await program.methods.changeCoordinates(new anchor.BN(2), new anchor.BN(1))
     .rpc();
   });
+
+  it("Displays coordinates", async () => {
+    const seeds= [];
+    const [myStorage, _bump ] = anchor.web3.PublicKey.findProgramAddressSync(seeds, program.programId);
+    
+    await program.methods.printCoordinates()
+    .accounts({
+      myStorage: myStorage
+    })
+    .rpc();
+  });
 });
